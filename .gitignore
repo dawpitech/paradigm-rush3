@@ -1,0 +1,11 @@
+*.o
+*.gcno
+*.gcda
+*.log
+*.json
+.cache
+*.out
+vgcore*
+main.cpp
+*.txt
+*.json
