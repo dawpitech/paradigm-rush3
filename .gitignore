@@ -6,6 +6,5 @@
 .cache
 *.out
 vgcore*
-main.cpp
 *.txt
 *.json
