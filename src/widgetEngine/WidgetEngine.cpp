@@ -14,5 +14,5 @@
 
 WidgetEngine::WidgetEngine()
 {
-    this->_modules = {I};
+    this->_modules = {};
 }
