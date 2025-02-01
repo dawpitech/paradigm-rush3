@@ -7,6 +7,8 @@
 
 #include <thread>
 
+#include "app/App.hpp"
+#include "displayEngine/sfml/SfmlDisplay.hpp"
 #include "widgetEngine/WidgetEngine.hpp"
 #include "widgetEngine/widgets/StringWidget.hpp"
 
@@ -32,7 +34,8 @@
 
 int main(const int argc, char **argv, char **env)
 {
-    if (argc > 1 && (std::string(argv[1]) == "--debug-renderer"))
+    if (argc > 1 && std::string(argv[1]) == "--debug-renderer")
         debug_renderer();
-    return 0;
+    Krell::App app(Krell::DisplayType::NCURSES);
+    return app.run();
 }

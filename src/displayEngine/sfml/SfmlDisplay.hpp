@@ -7,9 +7,9 @@
 
 #pragma once
 #include "displayEngine/ADisplay.hpp"
+#include "widgetEngine/widgets/IWidget.hpp"
+#include <cstdint>
 #include <cstdio>
-#include <exception>
-#include <string>
 
 namespace Krell {
     class SfmlDisplay : public ADisplay {
@@ -18,13 +18,31 @@ namespace Krell {
         SfmlDisplay();
         ~SfmlDisplay() {};
 
+        void useEvent() override;
         void moveWidget() override {};
         void removeWidget() override {};
         void minimizeWidget() override {};
+        void useAction() {};
 
        private:
+        virtual void _clear() const override;
+        virtual void _refresh() const override;
+        virtual void _displayBaseModule(
+            const IModule &module) const override;
+        virtual void _displayHistogramWidget(
+            const IWidget &widget, const std::uint8_t pos) const override {};
+        virtual void _displayProgressBarWidget(
+            const IWidget &widget, const std::uint8_t pos) const override;
+        virtual void _displayClockModule(
+            const IModule &module) const override;
+        virtual void _displayRangedWidget(
+            const IWidget &widget, const std::uint8_t pos) const override {};
+        virtual void _displayNumericWidget(
+            const IWidget &widget, const std::uint8_t pos) const override {};
+        virtual void _displayStringWidget(const IWidget &widget, const std::uint8_t pos) const override;
         const std::size_t _frameLimit = 60;
         bool _init() override;
         bool _checkEnv() const override;
+        std::uint8_t _nbModules = 5;
     };
 }  // namespace Krell

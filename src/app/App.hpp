@@ -8,7 +8,8 @@
 #pragma once
 
 #include "displayEngine/IDisplay.hpp"
-#include "widgetEngine/IModule.hpp"
+#include "enums.hpp"
+#include "widgetEngine/WidgetEngine.hpp"
 #include <cstdint>
 #include <exception>
 #include <memory>
@@ -16,12 +17,12 @@
 
 namespace Krell {
 
-    enum class DisplayType { NCURSES, SFML };
-
     class App {
        public:
-        App();
-        bool run(const DisplayType &type);
+        App(const Krell::DisplayType &type);
+
+        bool retrieveType(int argc, char **argv);
+        bool run();
 
         class Error : public std::exception {
            public:
@@ -37,9 +38,11 @@ namespace Krell {
         };
 
        private:
-        std::shared_ptr<std::vector<IModule>> _module = nullptr;
+        std::shared_ptr<std::vector<Krell::IModule>> _sortModules(
+            std::shared_ptr<std::vector<Krell::IModule>> modules);
         std::shared_ptr<IDisplay> _displayManager = nullptr;
-        DisplayType type = DisplayType::NCURSES;
+        std::shared_ptr<WidgetEngine> _widgetEngine = nullptr;
+        DisplayType _displayType = DisplayType::NCURSES;
         std::uint16_t timeBetweenFrameMs = 2000;
     };
 }  // namespace Krell
