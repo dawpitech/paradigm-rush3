@@ -6,6 +6,7 @@
 //
 
 #include "ADisplay.hpp"
+#include "widgetEngine/modules/ClockModule.hpp"
 #include "widgetEngine/modules/IModule.hpp"
 #include "enums.hpp"
 #include "widgetEngine/widgets/AWidget.hpp"
@@ -18,41 +19,53 @@ Krell::DisplayType Krell::ADisplay::displayModules(
     if (modules == nullptr) {
         throw Error("Modules not found in displayModules");
     }
+    this->_clear();
     for (auto &module : *modules) {
+        if (!module)
+            throw Error("Unable to access module");
+        this->_displayBaseModule(*module);
         this->_displayWidgets(*module);
     }
+    this->_refresh();
     return Krell::DisplayType::SFML;
 }
 
+//a suppr
+
 void Krell::ADisplay::_displayWidgets(const IModule &module) const
 {
-    this->_displayBaseModule(module);
-    for (auto widget : module.getWidgets()) {
+    if (dynamic_cast<const Modules::ClockModule *>(&module)) {
+        /*_displayClockModule(module);*/
+        return;
+    }
+    auto widgets = module.getWidgets();
 
+    for (size_t i = 0; i < widgets.size(); i += 1) {
+
+        auto size = i * 25;
         /*if (dynamic_cast<Krell::Widgets::HistogramWidget *>(widget.get()) != nullptr) {*/
-        /*    this->_displayHistogramWidget(*widget);*/
-        /*    return;*/
+        /*    this->_displayHistogramWidget(*widgets[i]);*/
+        /*    continue;*/
         /*}*/
-        /*if (dynamic_cast<Krell::Widgets::ProgressBarWidget *>(widget.get()) != nullptr) {*/
-        /*    this->_displayProgressBarWidget(*widget);*/
-        /*    return;*/
+        /*if (dynamic_cast<Krell::Widgets::ProgressBarWidget *>(widgets[i].get()) != nullptr) {*/
+        /*    this->_displayProgressBarWidget(*widgets[i]);*/
+        /*    continue;*/
         /*}*/
-        /*if (dynamic_cast<Krell::Widgets::ClockWidget *>(widget.get()) != nullptr) {*/
-        /*    this->_displayClockWidget(*widget);*/
-        /*    return;*/
+        /*if (dynamic_cast<Krell::Widgets::ClockWidget *>(widgets[i].get()) != nullptr) {*/
+        /*    this->_displayClockWidget(*widgets[i], size);*/
+        /*    continue;*/
         /*}*/
-        /*if (dynamic_cast<Krell::Widgets::RangedWidget *>(widget.get()) != nullptr) {*/
-        /*    this->_displayRangedWidget(*widget);*/
-        /*    return;*/
+        /*if (dynamic_cast<Krell::Widgets::RangedWidget *>(widgets[i].get()) != nullptr) {*/
+        /*    this->_displayRangedWidget(*widgets[i]);*/
+        /*    continue;*/
         /*}*/
-        /*if (dynamic_cast<Krell::Widgets::NumericWidget *>(widget.get()) != nullptr) {*/
-        /*    this->_displayNumericWidget(*widget);*/
-        /*    return;*/
+        /*if (dynamic_cast<Krell::Widgets::NumericWidget *>(widgets[i].get()) != nullptr) {*/
+        /*    this->_displayNumericWidget(*widgets[i]);*/
+        /*    continue;*/
         /*}*/
-        if (dynamic_cast<Krell::Widgets::StringWidget *>(widget.get()) != nullptr) {
-            std::cout << "Je suis un string widget" << std::endl;
-            this->_displayStringWidget(*widget);
-            return;
+        if (dynamic_cast<Krell::Widgets::StringWidget *>(widgets[i].get()) != nullptr) {
+            this->_displayStringWidget(*widgets[i], size);
+            continue;
         }
         throw Error("Unknown module");
     }

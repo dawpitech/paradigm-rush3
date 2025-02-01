@@ -21,8 +21,8 @@ Krell::App::App(const Krell::DisplayType &type)
     this->_displayType = type;
     if (type == Krell::DisplayType::SFML)
         this->_displayManager = std::make_shared<SfmlDisplay>();
-    if (type == Krell::DisplayType::NCURSES)
-        this->_displayManager = std::make_shared<NCursesDisplay>();
+    /*if (type == Krell::DisplayType::NCURSES)*/
+    /*    this->_displayManager = std::make_shared<NCursesDisplay>();*/
     this->_widgetEngine = std::make_shared<WidgetEngine>();
 }
 
@@ -38,11 +38,8 @@ bool Krell::App::run()
             if (currentTime < previousTime + 2) {
                 continue;
             }
-            std::cout << "ici" << std::endl;
             previousTime = currentTime;
             auto modules = this->_widgetEngine->getModules();
-            /*auto modules = nullptr;*/
-            /*auto sortedModules = this->_sortModules(modules);*/
             this->_displayType = this->_displayManager->displayModules(modules);
         }
     } catch (const Error &error) {
