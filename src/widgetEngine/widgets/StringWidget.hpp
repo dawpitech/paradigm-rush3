@@ -23,7 +23,7 @@ namespace Krell::Widgets
             }
             ~StringWidget() override = default;
             [[nodiscard]] std::string getValue() const { return this->_value; }
-            void setValue(std::string value);
+            void setValue(const std::string& value) { this->_value = value; }
 
         protected:
             std::string _value = {};
