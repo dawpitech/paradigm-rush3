@@ -32,10 +32,16 @@
     }
 }
 
-int main(const int argc, char **argv, char **env)
+int main(const int argc, char **argv)
 {
-    if (argc > 1 && std::string(argv[1]) == "--debug-renderer")
+    if (argc > 1 && (std::string(argv[1]) == "--debug-renderer" || std::string(argv[1]) == "-d"))
         debug_renderer();
-    Krell::App app(Krell::DisplayType::SFML);
-    return app.run();
+
+    auto displayMode = Krell::DisplayType::NCURSES;
+    if (argc > 1 && (std::string(argv[1]) == "--SFML" || std::string(argv[1]) == "-s"))
+        displayMode = Krell::DisplayType::SFML;
+
+    const Krell::App app(displayMode);
+    app.run();
+    return 0;
 }

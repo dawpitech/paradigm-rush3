@@ -25,14 +25,14 @@ Krell::App::App(const DisplayType &type)
         this->_displayManager = std::make_unique<Displays::NCursesDisplay>();
 }
 
-[[noreturn]] int Krell::App::run()
+void Krell::App::run() const
 {
     auto previousTime = std::time(nullptr);
 
     if (this->_displayManager == nullptr)
         throw std::exception();
     try {
-        while (this->_displayType != DisplayType::NONE)
+        while (true)
         {
             if (std::time(nullptr) < previousTime + 2) {
                 // sleep for a short amount to prevent the main thread
@@ -47,11 +47,7 @@ Krell::App::App(const DisplayType &type)
             this->_widgetEngine.refreshData();
             this->_displayManager->displayModules(this->_widgetEngine.getModules());
         }
-    } catch (const std::exception &e) {
-        std::cerr << e.what() << std::endl;
-        return -1;
-    }
-    return 0;
+    } catch (const std::exception &e) { std::cerr << e.what() << std::endl; }
 }
 
 std::shared_ptr<std::vector<Krell::IModule>> Krell::App::_sortModules(

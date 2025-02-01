@@ -21,8 +21,7 @@ namespace Krell {
         public:
             explicit App(const DisplayType &type);
 
-            bool retrieveType(int argc, char **argv);
-            [[noreturn]] int run();
+            void run() const;
 
         private:
             std::shared_ptr<std::vector<IModule>> _sortModules(
