@@ -6,14 +6,16 @@
 */
 
 #include "WidgetEngine.hpp"
-#include "./IModule.hpp"
-#include "./IWidget.hpp"
-#include "widgetEngine/widgets/HistogramWidget.hpp"
-#include "widgetEngine/widgets/ProgressBarWidget.hpp"
-#include "widgetEngine/widgets/ValueWidget.hpp"
-#include "widgetEngine/widgets/StringWidget.hpp"
+#include "modules/SystemModule.hpp"
 
 WidgetEngine::WidgetEngine()
 {
-    this->_modules = {};
+    this->_modules = std::make_shared<std::vector<std::shared_ptr<Krell::IModule>>>();
+    this->_modules->push_back(std::make_shared<Krell::Modules::SystemModule>());
+}
+
+void WidgetEngine::refreshData() const
+{
+    //for (const auto module : *this->_modules)
+    //    module->update();
 }

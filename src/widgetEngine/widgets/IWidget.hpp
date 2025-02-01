@@ -15,12 +15,12 @@ namespace Krell
     class IWidget
     {
         public:
-            virtual ~IWidget() = 0;
-            virtual std::string getLegend() = 0;
-            virtual std::size_t getRenderSize() = 0;
+            virtual ~IWidget() = default;
+            [[nodiscard]] virtual std::string getLegend() const = 0;
+            [[nodiscard]] virtual std::size_t getRenderSize() const = 0;
 
         protected:
-            std::string _legend = {};
+            std::string _legend;
             std::size_t _renderSize = 0;
     };
 };

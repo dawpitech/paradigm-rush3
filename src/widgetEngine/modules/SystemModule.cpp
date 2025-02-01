@@ -6,11 +6,13 @@
 */
 
 #include "SystemModule.hpp"
-
-#include <widgetEngine/widgets/StringWidget.hpp>
+#include "AModule.hpp"
+#include "widgetEngine/widgets/StringWidget.hpp"
 
 Krell::Modules::SystemModule::SystemModule()
 {
+    this->_render_name = std::string("System Infos");
+
     std::string username(256, '\0');
     getlogin_r(username.data(), 256);
     std::string hostname(256, '\0');
@@ -18,14 +20,17 @@ Krell::Modules::SystemModule::SystemModule()
     std::string opSys = "UWUBUNTU";
     std::string kernel = "6.x.x gnu/linux";
 
-    this->addModule(Widgets::StringWidget(std::string(username), "Username:"));
-    this->addModule(Widgets::StringWidget(hostname, "Hostname:"));
-    this->addModule(Widgets::StringWidget(opSys, "Op. sys.:"));
-    this->addModule(Widgets::StringWidget(kernel, "Kernel:"));
+    this->_widgets.push_back(std::make_unique<Widgets::StringWidget>
+        ("Username:", username));
+    this->_widgets.push_back(std::make_unique<Widgets::StringWidget>
+        ("Hostname:", hostname));
+    this->_widgets.push_back(std::make_unique<Widgets::StringWidget>
+        ("Op. sys.:", opSys));
+    this->_widgets.push_back(std::make_unique<Widgets::StringWidget>
+        ("Kernel:", kernel));
 }
 
-void Krell::Modules::SystemModule::addModule(const IWidget& widget)
+void Krell::Modules::SystemModule::update() const
 {
-    auto modules = *this->_widgets;
-    modules.insert(modules.begin(), widget);
+
 }
