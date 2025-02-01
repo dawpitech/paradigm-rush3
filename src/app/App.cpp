@@ -7,22 +7,22 @@
 
 #include <iostream>
 #include <memory>
+#include <thread>
 #include <vector>
 
 #include "App.hpp"
+
 #include "enums.hpp"
 #include "displayEngine/IDisplay.hpp"
-#include "displayEngine/sfml/SfmlDisplay.hpp"
+#include "displayEngine/ncurses/NCursesDisplay.hpp"
 #include "widgetEngine/WidgetEngine.hpp"
 #include "widgetEngine/modules/IModule.hpp"
 
 Krell::App::App(const DisplayType &type)
 {
     this->_displayType = type;
-    if (type == DisplayType::SFML)
-        this->_displayManager = std::make_unique<SfmlDisplay>();
-    /*if (type == Krell::DisplayType::NCURSES)*/
-    /*    this->_displayManager = std::make_shared<NCursesDisplay>();*/
+    if (type == DisplayType::NCURSES)
+        this->_displayManager = std::make_unique<Displays::NCursesDisplay>();
 }
 
 [[noreturn]] int Krell::App::run()
@@ -30,18 +30,23 @@ Krell::App::App(const DisplayType &type)
     auto previousTime = std::time(nullptr);
 
     try {
-        while (this->_displayType != DisplayType::NONE) {
-            const std::time_t currentTime = std::time(nullptr);
-            this->_displayManager->useEvent();
-            if (currentTime < previousTime + 2)
+        while (this->_displayType != DisplayType::NONE)
+        {
+            if (std::time(nullptr) < previousTime + 2) {
+                // sleep for a short amount to prevent the main thread
+                // going brrrr and making the CPU cosplay a toaster
+                std::this_thread::sleep_for(std::chrono::milliseconds(10));
+                // still handle here the input events to make the UI responsive
+                // regardless of the refresh time
+                this->_displayManager->useEvent();
                 continue;
-
-            previousTime = currentTime;
-            const auto modules = this->_widgetEngine.getModules();
-            this->_displayType = this->_displayManager->displayModules(modules);
+            }
+            previousTime = std::time(nullptr);
+            this->_widgetEngine.refreshData();
+            this->_displayManager->displayModules(this->_widgetEngine.getModules());
         }
-    } catch (const Error &error) {
-        std::cerr << error.what() << std::endl;
+    } catch (const std::exception &e) {
+        std::cerr << e.what() << std::endl;
         return -1;
     }
     return 0;

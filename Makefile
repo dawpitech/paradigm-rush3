@@ -20,6 +20,7 @@ CPPFLAGS	+=	-iquote src
 LDFLAGS	=	-lsfml-graphics
 LDFLAGS	+=	-lsfml-window
 LDFLAGS	+=	-lsfml-system
+LDFLAGS	+=	-lncurses
 
 BDIR	=	.build/release
 

@@ -5,31 +5,34 @@
 ** NCursesDisplay
 */
 
-#include <cstdint>
-#include <ncurses.h>
-#include <iostream>
-
 #pragma once
 
-namespace Krell {
+#include <ncurses.h>
 
-    class NCursesDisplay  {
+#include "displayEngine/IDisplay.hpp"
+#include "widgetEngine/widgets/StringWidget.hpp"
+
+namespace Krell::Displays
+{
+    class NCursesDisplay final : public IDisplay
+    {
         public:
-            NCursesDisplay();
-            ~NCursesDisplay() {};
-            void printLayout(WINDOW *window, int width, std::string name);
-            void stringContent(WINDOW *window, int maxWidth, int maxHeight);
-            void gaugeContent(WINDOW *gauge, int maxWidth, int percentage);
-            void progressBarContent(WINDOW *progressBar, int maxWidth, int percentage);
-            void histogramContent(WINDOW *window, int width, int percentage);
-            /* void displayWidget() override;
-            void moveWidget() override;
-            void removeWidget() override;
-            void minimizeWidget() override; */
+            explicit NCursesDisplay();
+            ~NCursesDisplay() override;
+            void displayModules(
+                std::shared_ptr<std::vector<std::shared_ptr<IModule>>> modules
+            ) const override;
+            void useEvent() override;
+            void _refresh() const override;
 
-        private:
-            int _mouseEvent;
-           /*  bool _checkEnv() const override; */
+        protected:
+            static void renderWidget(const std::shared_ptr<IWidget>& widget,
+                WINDOW* window,
+                std::uint8_t x,
+                std::uint8_t y);
+            static void renderStringWidget(const Widgets::StringWidget* widget,
+                WINDOW* window,
+                std::uint8_t x,
+                std::uint8_t y);
     };
-
 }

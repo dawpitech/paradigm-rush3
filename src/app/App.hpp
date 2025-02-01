@@ -22,7 +22,7 @@ namespace Krell {
             explicit App(const DisplayType &type);
 
             bool retrieveType(int argc, char **argv);
-            int run();
+            [[noreturn]] int run();
 
             class Error : public std::exception {
                 public:
