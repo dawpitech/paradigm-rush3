@@ -17,6 +17,10 @@ CPPFLAGS	+=	-Wunreachable-code
 CPPFLAGS	+=	-pedantic
 CPPFLAGS	+=	-iquote src
 
+LDFLAGS	=	-lsfml-graphics
+LDFLAGS	+=	-lsfml-window
+LDFLAGS	+=	-lsfml-system
+
 BDIR	=	.build/release
 
 SRC	=	$(shell find src -name "*.cpp")
@@ -30,10 +34,10 @@ all: $(NAME)
 
 $(BDIR)/%.o: %.cpp
 	@ mkdir -p $(dir $@)
-	$(CC) -o $@ -c $< $(CPPFLAGS)
+	$(CC) -o $@ -c $< $(CPPFLAGS) $(LDFLAGS)
 
 $(NAME): $(OBJ)
-	$(CC) $(OBJ) $(CPPFLAGS) -o $(NAME)
+	$(CC) $(OBJ) $(CPPFLAGS) -o $(NAME) $(LDFLAGS)
 
 .PHONY: clean
 clean:
