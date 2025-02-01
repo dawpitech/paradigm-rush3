@@ -13,15 +13,13 @@
 #include <cstdlib>
 #include <string>
 
-SfmlDisplay::SfmlDisplay()
+Krell::SfmlDisplay::SfmlDisplay()
 {
-    this->_sizeX = 800;
-    this->_sizeY = 200;
     this->_checkEnv();
     this->_init();
 }
 
-bool SfmlDisplay::_checkEnv() const
+bool Krell::SfmlDisplay::_checkEnv() const
 {
     char *display = std::getenv("DISPLAY");
     /*char *xAuthority = std::getenv("XAUTHORITY");*/
@@ -32,7 +30,7 @@ bool SfmlDisplay::_checkEnv() const
     return true;
 }
 
-bool SfmlDisplay::_init()
+bool Krell::SfmlDisplay::_init()
 {
     this->_window = std::make_shared<sf::RenderWindow>(
         sf::VideoMode(this->_sizeX, this->_sizeY), "MyGKREEEEEEEEEEEEEEL");

@@ -9,7 +9,7 @@
 
 int main(int argc, char **argv, char **env)
 {
-    SfmlDisplay displayManager;
+    Krell::SfmlDisplay displayManager;
 
     return 0;
 }
