@@ -6,37 +6,39 @@
 //
 
 #pragma once
-#include "displayEngine/IDisplay.hpp"
+#include "displayEngine/ADisplay.hpp"
 #include <cstdio>
 #include <exception>
 #include <string>
 
-class SfmlDisplay : public IDisplay {
+namespace Krell {
+    class SfmlDisplay : public ADisplay {
 
-   public:
-    SfmlDisplay();
-    ~SfmlDisplay()  {};
-
-    void displayWidget() override {};
-    void moveWidget() override {};
-    void removeWidget() override {};
-    void minimizeWidget() override {};
-
-    class Error : public std::exception {
        public:
-        Error(const std::string &msg) : _msg(msg) {};
+        SfmlDisplay();
+        ~SfmlDisplay() {};
 
-        const char *what() const noexcept override
-        {
-            return this->_msg.c_str();
+        void displayWidget() override {};
+        void moveWidget() override {};
+        void removeWidget() override {};
+        void minimizeWidget() override {};
+
+        class Error : public std::exception {
+           public:
+            Error(const std::string &msg) : _msg(msg) {};
+
+            const char *what() const noexcept override
+            {
+                return this->_msg.c_str();
+            };
+
+           private:
+            std::string _msg;
         };
 
        private:
-        std::string _msg;
+        const std::size_t _frameLimit = 60;
+        bool _init() override;
+        bool _checkEnv() const override;
     };
-
-   private:
-    const std::size_t _frameLimit = 60;
-    bool _init();
-    bool _checkEnv() const override;
-};
+}  // namespace Krell
