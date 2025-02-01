@@ -8,15 +8,17 @@
 #ifndef WIDGETENGINE_HPP
     #define WIDGETENGINE_HPP
 
-    #include "IModule.hpp"
+    #include "modules/IModule.hpp"
 
 class WidgetEngine
 {
     public:
-        void update();
-        std::vector<IModule&> getModules();
+        explicit WidgetEngine();
+        void refreshData() const;
+        [[nodiscard]] std::shared_ptr<std::vector<std::shared_ptr<Krell::IModule>>>
+            getModules() const { return this->_modules; }
 
     protected:
-        std::vector<IModule&> _modules;
+        std::shared_ptr<std::vector<std::shared_ptr<Krell::IModule>>> _modules;
 };
 #endif //WIDGETENGINE_HPP

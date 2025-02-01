@@ -23,9 +23,7 @@ LDFLAGS	+=	-lsfml-system
 
 BDIR	=	.build/release
 
-SRC	=	src/main.cpp
-# SRC	+=	src/widgetEngine/WidgetEngine.cpp
-SRC	+=	src/displayEngine/sfml/SfmlDisplay.cpp
+SRC	=	$(shell find src -name "*.cpp")
 
 OBJ = $(SRC:%.cpp=$(BDIR)/%.o)
 

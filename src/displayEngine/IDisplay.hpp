@@ -7,12 +7,12 @@
 
 #pragma once
 
-#include "IModule.hpp"
-#include "IWidget.hpp"
-#include <SFML/Graphics/RenderWindow.hpp>
 #include <cstdint>
 #include <memory>
 #include <vector>
+#include <SFML/Graphics/RenderWindow.hpp>
+
+#include "widgetEngine/modules/IModule.hpp"
 
 namespace Krell {
     class IDisplay {
@@ -25,8 +25,9 @@ namespace Krell {
        protected:
         virtual bool _checkEnv() const = 0;
         virtual bool _init() = 0;
+        virtual void _displayBaseModule(const IModule &module) const = 0;
         virtual void _displayWidgets(const IModule &module) const = 0;
-        virtual void _displayHistogramWidget(const IModule &module) const;
+        virtual void _displayHistogramWidget(const IModule &module) const = 0;
         const std::uint32_t _sizeX = 800;
         const std::uint32_t _sizeY = 200;
         std::shared_ptr<sf::RenderWindow> _window;

@@ -33,6 +33,7 @@ namespace Krell {
         };
 
        protected:
+        virtual void _displayBaseModule(const IModule &module) const override;
         virtual void _displayWidgets(const IModule &module) const override;
         virtual void _displayHistogramWidget(
             const IModule &module) const override;
