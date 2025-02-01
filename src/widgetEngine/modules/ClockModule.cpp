@@ -34,5 +34,9 @@ void Krell::Modules::ClockModule::update() const
         local_time->tm_min,
         local_time->tm_sec);
 
+    std::ostringstream oss;
+    oss << std::put_time(local_time, "%d/%m/%Y");
+
+    dynamic_cast<Widgets::StringWidget*>(this->_widgets.at(0).get())->setValue(oss.str());
     dynamic_cast<Widgets::StringWidget*>(this->_widgets.at(1).get())->setValue(renderedTime);
 }
