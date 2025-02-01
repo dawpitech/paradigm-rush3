@@ -30,7 +30,7 @@ namespace Krell
 
         protected:
             virtual void addModule(const IWidget& widget) = 0;
-            std::shared_ptr<std::vector<IWidget &>> _widgets = nullptr;
+            std::shared_ptr<std::vector<IWidget>> _widgets = nullptr;
             std::string _render_name = {};
             std::size_t _render_pos = 0;
             bool _active = false;

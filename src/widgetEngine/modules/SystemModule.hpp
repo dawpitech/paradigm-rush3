@@ -17,7 +17,7 @@ namespace Krell::Modules
         public:
             SystemModule();
             ~SystemModule() override = default;
-            std::vector<IWidget&> getWidgets() override { return this->_widgets; }
+            std::shared_ptr<std::vector<IWidget>> getWidgets() override { return this->_widgets; }
             IWidget& getWidget(std::string legend) override;
             std::string getRenderName() override { return this->_render_name; }
             std::size_t getRenderPos() override { return this->_render_pos; }

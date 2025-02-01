@@ -10,7 +10,8 @@
 #include "./IWidget.hpp"
 #include "widgetEngine/widgets/HistogramWidget.hpp"
 #include "widgetEngine/widgets/ProgressBarWidget.hpp"
-#include "widgetEngine/widgets/Widget.hpp"
+#include "widgetEngine/widgets/ValueWidget.hpp"
+#include "widgetEngine/widgets/StringWidget.hpp"
 
 WidgetEngine::WidgetEngine()
 {

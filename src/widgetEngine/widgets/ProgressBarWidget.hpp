@@ -11,11 +11,11 @@
 
 namespace Krell::Widgets
 {
-    class ProgressBarWidget final : public Widget
+    class ProgressBarWidget final : public ValueWidget
     {
         public:
             ProgressBarWidget(const std::int32_t value, const std::string& legend)
-                : Widget(value, legend, PROGRESSBAR_WIDTH) {}
+                : ValueWidget(value, legend, PROGRESSBAR_WIDTH) {}
             ~ProgressBarWidget() override = default;
     };
 }

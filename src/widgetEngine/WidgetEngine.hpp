@@ -15,9 +15,9 @@ class WidgetEngine
     public:
         WidgetEngine();
         void update();
-        std::vector<Krell::IModule&> getModules();
+        std::vector<Krell::IModule> getModules();
 
     protected:
-        std::vector<Krell::IModule&> _modules;
+        std::vector<Krell::IModule> _modules;
 };
 #endif //WIDGETENGINE_HPP

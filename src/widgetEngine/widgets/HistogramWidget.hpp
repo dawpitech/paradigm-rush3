@@ -11,16 +11,16 @@
 
     #include <array>
 
-    #include "widgetEngine/widgets/Widget.hpp"
+    #include "widgetEngine/widgets/ValueWidget.hpp"
 
 namespace Krell::Widgets
 {
-    class HistogramWidget final : public Widget
+    class HistogramWidget final : public ValueWidget
     {
         public:
             HistogramWidget(const std::int32_t value, const std::string& legend,
                 const std::size_t renderSize = 6)
-                : Widget(value, legend, renderSize) {}
+                : ValueWidget(value, legend, renderSize) {}
             ~HistogramWidget() override = default;
             void addValue(const std::uint8_t value)
             {
