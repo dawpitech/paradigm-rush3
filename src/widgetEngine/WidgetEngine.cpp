@@ -16,6 +16,6 @@ WidgetEngine::WidgetEngine()
 
 void WidgetEngine::refreshData() const
 {
-    //for (const auto module : *this->_modules)
-    //    module->update();
+    for (const auto& module : *this->_modules)
+        module->update();
 }
