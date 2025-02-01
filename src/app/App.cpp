@@ -16,9 +16,13 @@
 #include <memory>
 #include <vector>
 
-Krell::App::App()
+Krell::App::App(const Krell::DisplayType &type)
 {
-    this->_displayManager = std::make_shared<SfmlDisplay>();
+    this->_displayType = type;
+    if (type == Krell::DisplayType::SFML)
+        this->_displayManager = std::make_shared<SfmlDisplay>();
+    if (type == Krell::DisplayType::NCURSES)
+        this->_displayManager = std::make_shared<NCursesDisplay>();
     this->_widgetEngine = std::make_shared<WidgetEngine>();
 }
 

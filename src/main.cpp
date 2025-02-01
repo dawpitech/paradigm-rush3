@@ -11,7 +11,7 @@
 
 int main(int argc, char **argv)
 {
-    Krell::App app;
+    Krell::App app(Krell::DisplayType::NCURSES);
 
     return app.run();
 }

@@ -19,7 +19,7 @@ namespace Krell {
 
     class App {
        public:
-        App();
+        App(const Krell::DisplayType &type);
 
         bool retrieveType(int argc, char **argv);
         bool run();
