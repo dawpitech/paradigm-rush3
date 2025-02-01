@@ -18,23 +18,9 @@ namespace Krell {
         SfmlDisplay();
         ~SfmlDisplay() {};
 
-        void displayWidget() override {};
         void moveWidget() override {};
         void removeWidget() override {};
         void minimizeWidget() override {};
-
-        class Error : public std::exception {
-           public:
-            Error(const std::string &msg) : _msg(msg) {};
-
-            const char *what() const noexcept override
-            {
-                return this->_msg.c_str();
-            };
-
-           private:
-            std::string _msg;
-        };
 
        private:
         const std::size_t _frameLimit = 60;
