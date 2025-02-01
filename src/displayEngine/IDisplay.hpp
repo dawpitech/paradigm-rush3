@@ -9,6 +9,7 @@
 
 #include "enums.hpp"
 #include "widgetEngine/IModule.hpp"
+#include "widgetEngine/IWidget.hpp"
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <cstdint>
 #include <memory>
@@ -27,14 +28,14 @@ namespace Krell {
        protected:
         virtual bool _checkEnv() const = 0;
         virtual bool _init() = 0;
-        virtual void _displayBaseModule(const IModule &module) const = 0;
+        virtual void _displayBaseModule(const IWidget &module) const = 0;
         virtual void _displayWidgets(const IModule &module) const = 0;
-        virtual void _displayHistogramWidget(const IModule &module) const = 0;
-        virtual void _displayProgressBarWidget(const IModule &module) const = 0;
-        virtual void _displayClockWidget(const IModule &module) const = 0;
-        virtual void _displayRangedWidget(const IModule &module) const = 0;
-        virtual void _displayNumericWidget(const IModule &module) const = 0;
-        virtual void _displayStringWidget(const IModule &module) const = 0;
+        virtual void _displayHistogramWidget(const IWidget &widget) const = 0;
+        virtual void _displayProgressBarWidget(const IWidget &widget) const = 0;
+        virtual void _displayClockWidget(const IWidget &widget) const = 0;
+        virtual void _displayRangedWidget(const IWidget &widget) const = 0;
+        virtual void _displayNumericWidget(const IWidget &widget) const = 0;
+        virtual void _displayStringWidget(const IWidget &widget) const = 0;
         const std::uint32_t _sizeX = 800;
         const std::uint32_t _sizeY = 200;
         std::shared_ptr<sf::RenderWindow> _window;

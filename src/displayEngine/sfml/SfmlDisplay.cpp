@@ -6,8 +6,12 @@
 //
 
 #include "displayEngine/sfml/SfmlDisplay.hpp"
+#include "widgetEngine/IWidget.hpp"
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <SFML/System/Sleep.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Event.hpp>
@@ -38,10 +42,11 @@ bool Krell::SfmlDisplay::_init()
     if (this->_window->isOpen() != true)
         throw Error("Unable to open window");
     this->_window->setFramerateLimit(this->_frameLimit);
+    this->_window->display();
     return true;
 }
 
-void Krell::SfmlDisplay::useEvent() 
+void Krell::SfmlDisplay::useEvent()
 {
     auto window = this->_window;
     sf::Event event;
@@ -54,10 +59,24 @@ void Krell::SfmlDisplay::useEvent()
                 window->close();
                 break;
             case sf::Event::MouseButtonReleased:
+                std::cout << "Hello" << std::endl;
                 /*this->_useAction(event->);*/
                 break;
             default:
                 break;
         }
     }
+}
+
+void Krell::SfmlDisplay::_displayNumericWidget(const IWidget &widget) const
+{
+}
+
+void Krell::SfmlDisplay::_displayStringWidget(const IWidget &widget) const
+{
+    sf::Font font;
+
+    if (!font.loadFromFile("../../../fonts/arial.ttf"))
+        throw Error("Unable to load the sfFont");
+    sf::Text text(widget.getLegend(), font);
 }
