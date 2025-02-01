@@ -5,48 +5,46 @@
 // functions for orchestrator for our GKrellM
 //
 
-#include "App.hpp"
-#include "displayEngine/IDisplay.hpp"
-#include "displayEngine/sfml/SfmlDisplay.hpp"
-#include "enums.hpp"
-#include "widgetEngine/modules/IModule.hpp"
-#include "widgetEngine/WidgetEngine.hpp"
-#include <algorithm>
 #include <iostream>
 #include <memory>
 #include <vector>
 
-Krell::App::App(const Krell::DisplayType &type)
+#include "App.hpp"
+#include "enums.hpp"
+#include "displayEngine/IDisplay.hpp"
+#include "displayEngine/sfml/SfmlDisplay.hpp"
+#include "widgetEngine/WidgetEngine.hpp"
+#include "widgetEngine/modules/IModule.hpp"
+
+Krell::App::App(const DisplayType &type)
 {
     this->_displayType = type;
-    if (type == Krell::DisplayType::SFML)
-        this->_displayManager = std::make_shared<SfmlDisplay>();
+    if (type == DisplayType::SFML)
+        this->_displayManager = std::make_unique<SfmlDisplay>();
     /*if (type == Krell::DisplayType::NCURSES)*/
     /*    this->_displayManager = std::make_shared<NCursesDisplay>();*/
-    this->_widgetEngine = std::make_shared<WidgetEngine>();
 }
 
-bool Krell::App::run()
+[[noreturn]] int Krell::App::run()
 {
     auto previousTime = std::time(nullptr);
-    auto currentTime = previousTime;
 
     try {
-        while (this->_displayType != Krell::DisplayType::NONE) {
-            currentTime = std::time(nullptr);
+        while (this->_displayType != DisplayType::NONE) {
+            const std::time_t currentTime = std::time(nullptr);
             this->_displayManager->useEvent();
-            if (currentTime < previousTime + 2) {
+            if (currentTime < previousTime + 2)
                 continue;
-            }
+
             previousTime = currentTime;
-            auto modules = this->_widgetEngine->getModules();
+            const auto modules = this->_widgetEngine.getModules();
             this->_displayType = this->_displayManager->displayModules(modules);
         }
     } catch (const Error &error) {
         std::cerr << error.what() << std::endl;
-        return false;
+        return -1;
     }
-    return true;
+    return 0;
 }
 
 std::shared_ptr<std::vector<Krell::IModule>> Krell::App::_sortModules(
