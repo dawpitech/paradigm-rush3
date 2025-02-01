@@ -6,14 +6,19 @@
 //
 
 #include "displayEngine/sfml/SfmlDisplay.hpp"
-#include "widgetEngine/IWidget.hpp"
+#include "widgetEngine/modules/IModule.hpp"
+#include "widgetEngine/widgets/AWidget.hpp"
+#include "widgetEngine/widgets/IWidget.hpp"
+#include "widgetEngine/widgets/StringWidget.hpp"
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/System/Sleep.hpp>
 #include <SFML/System/Time.hpp>
+#include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Event.hpp>
 #include <cstdlib>
 #include <string>
@@ -59,7 +64,6 @@ void Krell::SfmlDisplay::useEvent()
                 window->close();
                 break;
             case sf::Event::MouseButtonReleased:
-                std::cout << "Hello" << std::endl;
                 /*this->_useAction(event->);*/
                 break;
             default:
@@ -68,15 +72,43 @@ void Krell::SfmlDisplay::useEvent()
     }
 }
 
-void Krell::SfmlDisplay::_displayNumericWidget(const IWidget &widget) const
+void Krell::SfmlDisplay::_displayBaseModule(const IModule &module) const 
 {
+    auto window = this->_window;
+    auto moduleName = module.getRenderName();
+    auto modulePos = module.getRenderPos();
+
+    auto newPos = (this->_sizeY / this->_nbModules) * modulePos;
+    auto moduleSize = this->_sizeY / this->_nbModules;
+    
+    window->clear();
+    sf::RectangleShape moduleShape;
+    moduleShape.setSize(sf::Vector2f(this->_sizeX - 20, moduleSize));
+    moduleShape.setOutlineColor(sf::Color::White);
+    moduleShape.setOutlineThickness(1);
+    moduleShape.setPosition(10, newPos + 10 * (modulePos + 1));
+    moduleShape.setFillColor(sf::Color::Transparent);
+    window->draw(moduleShape);
 }
+
+/*void Krell::SfmlDisplay::_displayNumericWidget(const Widgets::NumericWidget &widget) const*/
+/*{*/
+/*}*/
 
 void Krell::SfmlDisplay::_displayStringWidget(const IWidget &widget) const
 {
     sf::Font font;
+    auto window = this->_window;
 
-    if (!font.loadFromFile("../../../fonts/arial.ttf"))
+    if (!window)
+        throw Error("Unable to access window with string widget");
+    if (!font.loadFromFile("fonts/arial.ttf"))
         throw Error("Unable to load the sfFont");
     sf::Text text(widget.getLegend(), font);
+    text.setCharacterSize(15);
+    text.setFillColor(sf::Color::White);
+    text.setPosition(10, widget.getRenderSize() + 10);
+    std::cout << widget.getRenderSize();
+    window->draw(text);
+    window->display();
 }

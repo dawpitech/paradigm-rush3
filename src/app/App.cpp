@@ -9,7 +9,7 @@
 #include "displayEngine/IDisplay.hpp"
 #include "displayEngine/sfml/SfmlDisplay.hpp"
 #include "enums.hpp"
-#include "widgetEngine/IModule.hpp"
+#include "widgetEngine/modules/IModule.hpp"
 #include "widgetEngine/WidgetEngine.hpp"
 #include <algorithm>
 #include <iostream>

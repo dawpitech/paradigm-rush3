@@ -33,13 +33,13 @@ Krell::Modules::SystemModule::SystemModule()
         std::cerr << e.what() << std::endl;
     }
 
-    this->_widgets.push_back(std::make_unique<Widgets::StringWidget>
+    this->_widgets.push_back(std::make_shared<Widgets::StringWidget>
         ("Username:", username));
-    this->_widgets.push_back(std::make_unique<Widgets::StringWidget>
+    this->_widgets.push_back(std::make_shared<Widgets::StringWidget>
         ("Hostname:", hostname));
-    this->_widgets.push_back(std::make_unique<Widgets::StringWidget>
+    this->_widgets.push_back(std::make_shared<Widgets::StringWidget>
         ("Op. sys.:", opSys));
-    this->_widgets.push_back(std::make_unique<Widgets::StringWidget>
+    this->_widgets.push_back(std::make_shared<Widgets::StringWidget>
         ("Kernel:", kernel));
 }
 
