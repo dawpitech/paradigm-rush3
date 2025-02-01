@@ -29,6 +29,8 @@ Krell::App::App(const DisplayType &type)
 {
     auto previousTime = std::time(nullptr);
 
+    if (this->_displayManager == nullptr)
+        throw Error("Unable to access display manager");
     try {
         while (this->_displayType != DisplayType::NONE) {
             const std::time_t currentTime = std::time(nullptr);

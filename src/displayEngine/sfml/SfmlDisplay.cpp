@@ -59,7 +59,7 @@ void Krell::SfmlDisplay::useEvent()
     sf::Event event;
 
     if (!window)
-        throw "Unable to retrieve window for event";
+        throw Error("Unable to retrieve window for event");
     while (window->pollEvent(event)) {
         switch (event.type) {
             case sf::Event::Closed:
@@ -114,7 +114,7 @@ void Krell::SfmlDisplay::_displayStringWidget(
     sf::Text text(strToDisplay.c_str(), font);
     text.setCharacterSize(10);
     text.setFillColor(sf::Color::White);
-    text.setPosition(10, widget.getRenderSize() + 10 + pos);
+    text.setPosition(10, widget.getRenderSize() * 10 + pos);
     window->draw(text);
 }
 
@@ -128,20 +128,36 @@ void Krell::SfmlDisplay::_displayProgressBarWidget(
     /*    throw Error("Unable to cast progress bar widget");*/
 }
 
-void Krell::SfmlDisplay::_displayClockModule(const IModule &module) const 
+void Krell::SfmlDisplay::_displayClockModule(const IModule &module) const
 {
     auto window = this->_window;
+    auto posY = this->_sizeY / this->_nbModules;
+    posY *= (module.getRenderPos() + 1);
 
-    sf::Texture texture;
-
-    if (!texture.loadFromFile("sprites/clock.png")) {
-        throw Error("Unable to load texture");
+    sf::Texture clockTexture;
+    if (!clockTexture.loadFromFile("sprites/clock.png")) {
+        throw Error("Unable to load clock texture");
     }
-    sf::Sprite sprite(texture);
-    window->draw(sprite);
+    sf::Texture needleTexture;
+    if (!needleTexture.loadFromFile("sprites/needle.png")) {
+        throw Error("Unable to load needle texture");
+    }
+
+    sf::Sprite clockSprite(clockTexture);
+    sf::Sprite needleSprite(needleTexture);
+
+    clockSprite.setScale(0.5, 0.5);
+    needleSprite.setScale(0.5, 0.5);
+    clockSprite.setPosition(0, posY);
+    needleSprite.setPosition(clockSprite.getScale().x + 50, posY);
+    needleSprite.setOrigin(needleSprite.getPosition().x, needleSprite.getPosition().y + 200 );
+    needleSprite.rotate(90);
+    window->draw(clockSprite);
+    window->draw(needleSprite);
 }
 
-void Krell::SfmlDisplay::_clear() const {
+void Krell::SfmlDisplay::_clear() const
+{
     if (!this->_window)
         throw Error("Unable to clear window");
     this->_window->clear();

@@ -46,7 +46,7 @@ namespace Krell {
             const IWidget &widget, const std::uint8_t pos) const = 0;
         virtual void _displayStringWidget(
             const IWidget &widget, const std::uint8_t pos) const = 0;
-        const std::uint32_t _sizeX = 200;
+        const std::uint32_t _sizeX = 400;
         const std::uint32_t _sizeY = 800;
         std::shared_ptr<sf::RenderWindow> _window;
     };

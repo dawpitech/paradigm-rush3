@@ -36,6 +36,6 @@ int main(const int argc, char **argv, char **env)
 {
     if (argc > 1 && std::string(argv[1]) == "--debug-renderer")
         debug_renderer();
-    Krell::App app(Krell::DisplayType::NCURSES);
+    Krell::App app(Krell::DisplayType::SFML);
     return app.run();
 }

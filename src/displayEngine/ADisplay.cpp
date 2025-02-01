@@ -35,7 +35,7 @@ Krell::DisplayType Krell::ADisplay::displayModules(
 void Krell::ADisplay::_displayWidgets(const IModule &module) const
 {
     if (dynamic_cast<const Modules::ClockModule *>(&module)) {
-        /*_displayClockModule(module);*/
+        _displayClockModule(module);
         return;
     }
     auto widgets = module.getWidgets();

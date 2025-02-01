@@ -7,6 +7,9 @@
 
 #ifndef EXCEPTIONS_HPP
     #define EXCEPTIONS_HPP
+#include <exception>
+#include <string>
+
 namespace Krell::Widgets::Exceptions
 {
     class GenericWidgetException : public std::exception
