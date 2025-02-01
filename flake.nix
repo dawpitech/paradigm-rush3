@@ -29,6 +29,7 @@
             gdb
             mold
             sfml
+            ncurses
           ] ++ deps;
         };
 
