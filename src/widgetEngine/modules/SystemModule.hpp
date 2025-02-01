@@ -24,6 +24,7 @@ namespace Krell::Modules
             void setRenderPos(const std::size_t pos) override { this->_render_pos = pos; }
             bool isActive() override { return this->_active; }
             void setActive(const bool status) override { this->_active = status; }
+            void update() override {}
 
         protected:
             void addModule(const IWidget& widget) override;

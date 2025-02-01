@@ -27,6 +27,7 @@ namespace Krell
             virtual void setRenderPos(std::size_t pos) = 0;
             virtual bool isActive() = 0;
             virtual void setActive(bool status) = 0;
+            virtual void update() = 0;
 
         protected:
             virtual void addModule(const IWidget& widget) = 0;

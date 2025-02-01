@@ -7,15 +7,25 @@
 
 #include "SystemModule.hpp"
 
-#include <widgetEngine/widgets/Widget.hpp>
+#include <widgetEngine/widgets/StringWidget.hpp>
 
 Krell::Modules::SystemModule::SystemModule()
 {
-    this->addModule(Widgets::Widget(0, "Username"));
+    std::string username(256, '\0');
+    getlogin_r(username.data(), 256);
+    std::string hostname(256, '\0');
+    gethostname(hostname.data(), 256);
+    std::string opSys = "UWUBUNTU";
+    std::string kernel = "6.x.x gnu/linux";
 
+    this->addModule(Widgets::StringWidget(std::string(username), "Username:"));
+    this->addModule(Widgets::StringWidget(hostname, "Hostname:"));
+    this->addModule(Widgets::StringWidget(opSys, "Op. sys.:"));
+    this->addModule(Widgets::StringWidget(kernel, "Kernel:"));
 }
 
 void Krell::Modules::SystemModule::addModule(const IWidget& widget)
 {
-    this->_widgets.insert(widget, this->_widgets.begin());
+    auto modules = *this->_widgets;
+    modules.insert(modules.begin(), widget);
 }
