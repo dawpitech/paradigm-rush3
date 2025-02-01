@@ -13,11 +13,12 @@
 class WidgetEngine
 {
     public:
-        WidgetEngine();
-        void update();
-        std::vector<Krell::IModule> getModules();
+        explicit WidgetEngine();
+        void refreshData() const;
+        std::shared_ptr<std::vector<std::unique_ptr<Krell::IModule>>>
+            getModules() { return this->_modules; }
 
     protected:
-        std::vector<Krell::IModule> _modules;
+        std::shared_ptr<std::vector<std::unique_ptr<Krell::IModule>>> _modules;
 };
 #endif //WIDGETENGINE_HPP

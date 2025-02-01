@@ -28,6 +28,7 @@
             man-pages-posix
             gdb
             mold
+            sfml
           ] ++ deps;
         };
 

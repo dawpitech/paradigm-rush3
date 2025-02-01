@@ -20,8 +20,8 @@ namespace Krell
     {
         public:
             virtual ~IModule() = 0;
-            virtual std::shared_ptr<std::vector<IWidget>> getWidgets() = 0;
-            virtual IWidget& getWidget(std::string legend);
+            virtual std::vector<std::unique_ptr<IWidget>> getWidgets() = 0;
+            virtual std::unique_ptr<IWidget> getWidget(std::string legend);
             virtual std::string getRenderName() = 0;
             virtual std::size_t getRenderPos() = 0;
             virtual void setRenderPos(std::size_t pos) = 0;
@@ -30,8 +30,7 @@ namespace Krell
             virtual void update() = 0;
 
         protected:
-            virtual void addModule(const IWidget& widget) = 0;
-            std::shared_ptr<std::vector<IWidget>> _widgets = nullptr;
+            std::vector<std::unique_ptr<IWidget>> _widgets = {};
             std::string _render_name = {};
             std::size_t _render_pos = 0;
             bool _active = false;

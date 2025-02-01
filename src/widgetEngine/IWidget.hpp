@@ -8,7 +8,6 @@
 #ifndef IWIDGET_HPP
     #define IWIDGET_HPP
 
-    #include <cstdint>
     #include <iostream>
 
 namespace Krell
@@ -21,7 +20,7 @@ namespace Krell
             virtual std::size_t getRenderSize() = 0;
 
         protected:
-            std::string _legend;
+            std::string _legend = {};
             std::size_t _renderSize = 0;
     };
 };
