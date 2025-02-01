@@ -5,11 +5,13 @@
 // Main for rush3
 //
 
+#include "app/App.hpp"
 #include "displayEngine/sfml/SfmlDisplay.hpp"
+#include "enums.hpp"
 
-int main(int argc, char **argv, char **env)
+int main(int argc, char **argv)
 {
-    Krell::SfmlDisplay displayManager;
+    Krell::App app;
 
-    return 0;
+    return app.run();
 }

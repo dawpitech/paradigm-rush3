@@ -18,9 +18,11 @@ namespace Krell {
         SfmlDisplay();
         ~SfmlDisplay() {};
 
+        void useEvent() override;
         void moveWidget() override {};
         void removeWidget() override {};
         void minimizeWidget() override {};
+        void useAction() {};
 
        private:
         const std::size_t _frameLimit = 60;

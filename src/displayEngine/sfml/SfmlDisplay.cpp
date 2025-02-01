@@ -10,6 +10,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Sleep.hpp>
 #include <SFML/System/Time.hpp>
+#include <SFML/Window/Event.hpp>
 #include <cstdlib>
 #include <string>
 
@@ -38,4 +39,25 @@ bool Krell::SfmlDisplay::_init()
         throw Error("Unable to open window");
     this->_window->setFramerateLimit(this->_frameLimit);
     return true;
+}
+
+void Krell::SfmlDisplay::useEvent() 
+{
+    auto window = this->_window;
+    sf::Event event;
+
+    if (!window)
+        throw "Unable to retrieve window for event";
+    while (window->pollEvent(event)) {
+        switch (event.type) {
+            case sf::Event::Closed:
+                window->close();
+                break;
+            case sf::Event::MouseButtonReleased:
+                /*this->_useAction(event->);*/
+                break;
+            default:
+                break;
+        }
+    }
 }
