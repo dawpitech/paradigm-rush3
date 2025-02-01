@@ -6,43 +6,34 @@
 //
 
 #pragma once
-#include "displayEngine/ADisplay.hpp"
-#include "widgetEngine/widgets/IWidget.hpp"
+
 #include <cstdint>
-#include <cstdio>
+
+#include "displayEngine/IDisplay.hpp"
 
 namespace Krell {
-    class SfmlDisplay : public ADisplay {
+    class SfmlDisplay final : public IDisplay {
 
-       public:
-        SfmlDisplay();
-        ~SfmlDisplay() {};
+        public:
+            SfmlDisplay();
+            ~SfmlDisplay() override = default;
 
-        void useEvent() override;
-        void moveWidget() override {};
-        void removeWidget() override {};
-        void minimizeWidget() override {};
-        void useAction() {};
+            void useEvent() override;
+            void displayModules(std::shared_ptr<std::vector<std::shared_ptr<IModule>>> module)
+                const override;
+            void _refresh() const override;
 
-       private:
-        virtual void _clear() const override;
-        virtual void _refresh() const override;
-        virtual void _displayBaseModule(
-            const IModule &module) const override;
-        virtual void _displayHistogramWidget(
-            const IWidget &widget, const std::uint8_t pos) const override {};
-        virtual void _displayProgressBarWidget(
-            const IWidget &widget, const std::uint8_t pos) const override;
-        virtual void _displayClockModule(
-            const IModule &module) const override;
-        virtual void _displayRangedWidget(
-            const IWidget &widget, const std::uint8_t pos) const override {};
-        virtual void _displayNumericWidget(
-            const IWidget &widget, const std::uint8_t pos) const override {};
-        virtual void _displayStringWidget(const IWidget &widget, const std::uint8_t pos) const override;
-        const std::size_t _frameLimit = 60;
-        bool _init() override;
-        bool _checkEnv() const override;
-        std::uint8_t _nbModules = 5;
+        private:
+            bool _init();
+            bool _checkEnv() const;
+            void _displayStringWidget(const IWidget& widget, std::uint8_t pos) const;
+            void _displayProgressBarWidget(const IWidget& widget, std::uint8_t pos) const;
+            void _displayClockModule(const IModule& module) const;
+            void _displayBaseModule(const IModule& module) const;
+            void _clear() const;
+            std::uint8_t _nbModules = 5;
+            std::uint32_t _sizeX = 400;
+            std::uint32_t _sizeY = 800;
+            std::uint8_t _frameLimit = 1;
     };
 }  // namespace Krell

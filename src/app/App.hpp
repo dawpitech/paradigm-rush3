@@ -24,31 +24,12 @@ namespace Krell {
             bool retrieveType(int argc, char **argv);
             [[noreturn]] int run();
 
-            class Error : public std::exception {
-                public:
-                    Error(const std::string &msg) : _msg(msg) {};
-
-                    const char *what() const noexcept override
-                    {
-                        return this->_msg.c_str();
-                    };
-
-                private:
-                    std::string _msg;
-            };
-
-           private:
-            std::string _msg;
-        };
-
-       private:
-        std::shared_ptr<std::vector<Krell::IModule>> _sortModules(
-            std::shared_ptr<std::vector<Krell::IModule>> modules);
-        std::shared_ptr<IDisplay> _displayManager = nullptr;
-        std::shared_ptr<WidgetEngine> _widgetEngine = nullptr;
-        DisplayType _displayType = DisplayType::NCURSES;
-        std::uint16_t timeBetweenFrameMs = 2000;
-        const std::uint32_t sizeX = 400;
-        const std::uint32_t sizeY = 800;
+        private:
+            std::shared_ptr<std::vector<IModule>> _sortModules(
+                std::shared_ptr<std::vector<IModule>> modules);
+            std::unique_ptr<IDisplay> _displayManager = nullptr;
+            WidgetEngine _widgetEngine = WidgetEngine();
+            DisplayType _displayType = DisplayType::NCURSES;
+            std::uint16_t timeBetweenFrameMs = 2000;
     };
 }  // namespace Krell

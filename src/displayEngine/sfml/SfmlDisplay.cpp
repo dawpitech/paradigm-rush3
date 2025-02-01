@@ -31,14 +31,20 @@ Krell::SfmlDisplay::SfmlDisplay()
     this->_init();
 }
 
+void Krell::SfmlDisplay::displayModules(std::shared_ptr<std::vector<std::shared_ptr<IModule>>> module) const
+{
+    return;
+}
+
+
 bool Krell::SfmlDisplay::_checkEnv() const
 {
     char *display = std::getenv("DISPLAY");
     /*char *xAuthority = std::getenv("XAUTHORITY");*/
 
     /*if (display == NULL || xAuthority == NULL)*/
-    if (display == NULL)
-        throw Error("Env not set");
+    if (display == nullptr)
+        throw std::exception();
     return true;
 }
 
@@ -47,7 +53,7 @@ bool Krell::SfmlDisplay::_init()
     this->_window = std::make_shared<sf::RenderWindow>(
         sf::VideoMode(this->_sizeX, this->_sizeY), "MyGKREEEEEEEEEEEEEEL");
     if (this->_window->isOpen() != true)
-        throw Error("Unable to open window");
+        throw std::exception();
     this->_window->setFramerateLimit(this->_frameLimit);
     this->_window->display();
     return true;
@@ -56,10 +62,10 @@ bool Krell::SfmlDisplay::_init()
 void Krell::SfmlDisplay::useEvent()
 {
     auto window = this->_window;
-    sf::Event event;
+    sf::Event event{};
 
     if (!window)
-        throw Error("Unable to retrieve window for event");
+        throw std::exception();
     while (window->pollEvent(event)) {
         switch (event.type) {
             case sf::Event::Closed:
@@ -104,11 +110,11 @@ void Krell::SfmlDisplay::_displayStringWidget(
 
     auto stringWidget = dynamic_cast<const Widgets::StringWidget *>(&widget);
     if (stringWidget == nullptr)
-        throw Error("Unable to cast String Widget");
+        throw std::exception();
     if (!window)
-        throw Error("Unable to access window with string widget");
+        throw std::exception();
     if (!font.loadFromFile("Space_Mono/SpaceMono-Regular.ttf"))
-        throw Error("Unable to load the sfFont");
+        throw std::exception();
     std::string strToDisplay =
         stringWidget->getLegend() + stringWidget->getValue();
     sf::Text text(strToDisplay.c_str(), font);
@@ -136,11 +142,11 @@ void Krell::SfmlDisplay::_displayClockModule(const IModule &module) const
 
     sf::Texture clockTexture;
     if (!clockTexture.loadFromFile("sprites/clock.png")) {
-        throw Error("Unable to load clock texture");
+        throw std::exception();
     }
     sf::Texture needleTexture;
     if (!needleTexture.loadFromFile("sprites/needle.png")) {
-        throw Error("Unable to load needle texture");
+        throw std::exception();
     }
 
     sf::Sprite clockSprite(clockTexture);
@@ -159,13 +165,13 @@ void Krell::SfmlDisplay::_displayClockModule(const IModule &module) const
 void Krell::SfmlDisplay::_clear() const
 {
     if (!this->_window)
-        throw Error("Unable to clear window");
+        throw std::exception();
     this->_window->clear();
 }
 
 void Krell::SfmlDisplay::_refresh() const
 {
     if (!this->_window)
-        throw Error("Unable to refresh window");
+        throw std::exception();
     this->_window->display();
 }
