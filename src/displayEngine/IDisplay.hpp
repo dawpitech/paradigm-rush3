@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include "IModule.hpp"
-#include "IWidget.hpp"
+#include "widgetEngine/IModule.hpp"
+#include "widgetEngine/IWidget.hpp"
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <cstdint>
 #include <memory>
