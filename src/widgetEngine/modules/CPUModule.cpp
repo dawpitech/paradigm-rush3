@@ -5,11 +5,10 @@
 ** CPUModule.cpp
 */
 
-#include "CPUModule.hpp"
-
 #include <fstream>
 #include <sstream>
 
+#include "CPUModule.hpp"
 #include "widgetEngine/Exceptions.hpp"
 #include "widgetEngine/widgets/NumericWidget.hpp"
 #include "widgetEngine/widgets/StringWidget.hpp"
@@ -31,7 +30,7 @@ Krell::Modules::CPUModule::CPUModule()
     this->_widgets.push_back(std::make_unique<Widgets::StringWidget>
         ("CPU:", cpuName));
     this->_widgets.push_back(std::make_unique<Widgets::NumericWidget>
-        ("Freq. (Mhz):", cpuFreq));
+        ("Freq. (MHz):", cpuFreq));
 }
 
 void Krell::Modules::CPUModule::update() const

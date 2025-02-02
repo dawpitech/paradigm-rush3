@@ -11,7 +11,7 @@
     #define CPU_NAME_PLACEHOLDER "Unknown"
     #define CPU_FREQ_PLACEHOLDER 3000
 
-#include "AModule.hpp"
+    #include "AModule.hpp"
 
 namespace Krell::Modules
 {
