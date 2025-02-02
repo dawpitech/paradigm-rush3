@@ -46,7 +46,6 @@ Krell::Modules::SystemModule::SystemModule()
 std::string Krell::Modules::SystemModule::getOpSys()
 {
     std::ifstream file_stream(OS_RELEASE_PATH, std::ios::in | std::ios::ate);
-    std::map<std::string, std::string> key_value_map;
 
     if (!file_stream.is_open())
         throw Widgets::Exceptions::NoSystemAccess();

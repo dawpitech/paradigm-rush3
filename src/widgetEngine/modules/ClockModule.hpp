@@ -20,8 +20,6 @@ namespace Krell::Modules
         public:
             explicit ClockModule();
             void update() const override;
-
-        protected:
     };
 }
 #endif //CLOCKMODULE_HPP
