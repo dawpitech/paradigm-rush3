@@ -5,8 +5,8 @@
 ** SystemModule.cpp
 */
 
+#include <array>
 #include <fstream>
-#include <map>
 #include <sstream>
 #include <sys/utsname.h>
 
@@ -19,14 +19,18 @@ Krell::Modules::SystemModule::SystemModule()
 {
     this->_render_name = std::string("System Infos");
 
-    std::string username(256, '\0');
-    std::string hostname(256, '\0');
+    std::array<char, 256> username_buff = {0};
+    std::array<char, 256> hostname_buff = {0};
+    std::string username = DEFAULT_FIELD_VALUE;
+    std::string hostname = DEFAULT_FIELD_VALUE;
     std::string opSys = DEFAULT_FIELD_VALUE;
     std::string kernel = DEFAULT_FIELD_VALUE;
 
     try {
-        getlogin_r(username.data(), 256);
-        gethostname(hostname.data(), 256);
+        getlogin_r(username_buff.begin(), 256);
+        username = std::string(username_buff.data());
+        gethostname(hostname_buff.begin(), 256);
+        hostname = std::string(hostname_buff.data());
         opSys = getOpSys();
         kernel = getKernelVer();
     } catch (const Widgets::Exceptions::GenericWidgetException& e) {
