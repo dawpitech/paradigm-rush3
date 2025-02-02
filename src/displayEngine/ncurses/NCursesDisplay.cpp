@@ -8,7 +8,6 @@
 #include <ncurses.h>
 
 #include "NCursesDisplay.hpp"
-#include "widgetEngine/widgets/StringWidget.hpp"
 
 Krell::Displays::NCursesDisplay::NCursesDisplay()
 {
@@ -69,6 +68,10 @@ void Krell::Displays::NCursesDisplay::renderWidget(
         return renderStringWidget(
             dynamic_cast<Widgets::StringWidget*>(widget.get()),
             window, x, y);
+    if (dynamic_cast<Widgets::NumericWidget*>(widget.get()) != nullptr)
+        return renderNumericWidget(
+            dynamic_cast<Widgets::NumericWidget*>(widget.get()),
+            window, x, y);
 }
 
 void Krell::Displays::NCursesDisplay::renderStringWidget(
@@ -82,6 +85,16 @@ void Krell::Displays::NCursesDisplay::renderStringWidget(
         widget->getValue().c_str());
 }
 
+void Krell::Displays::NCursesDisplay::renderNumericWidget(
+    const Widgets::NumericWidget* widget,
+    WINDOW* window,
+    const std::uint8_t x,
+    const std::uint8_t y)
+{
+    mvwprintw(window, y, x, "%s %u",
+        widget->getLegend().c_str(),
+        widget->getValue());
+}
 
 void Krell::Displays::NCursesDisplay::useEvent()
 {

@@ -11,6 +11,7 @@
 
 #include "displayEngine/IDisplay.hpp"
 #include "widgetEngine/widgets/StringWidget.hpp"
+#include "widgetEngine/widgets/NumericWidget.hpp"
 
 namespace Krell::Displays
 {
@@ -31,6 +32,10 @@ namespace Krell::Displays
                 std::uint8_t x,
                 std::uint8_t y);
             static void renderStringWidget(const Widgets::StringWidget* widget,
+                WINDOW* window,
+                std::uint8_t x,
+                std::uint8_t y);
+            static void renderNumericWidget(const Widgets::NumericWidget* widget,
                 WINDOW* window,
                 std::uint8_t x,
                 std::uint8_t y);
