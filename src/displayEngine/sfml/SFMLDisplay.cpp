@@ -50,13 +50,22 @@ void Krell::Displays::SFMLDisplay::displayModules(
         box.setFillColor(sf::Color(0, 0, 0));
         this->_window->draw(box);
 
+        sf::Text text;
+
+        text.setFont(*this->_font);
+        text.setPosition(25, current_y_pos);
+        text.setString(module->getRenderName());
+        text.setCharacterSize(15);
+        text.setFillColor(sf::Color::White);
+        this->_window->draw(text);
+
         std::uint16_t current_rendering_y = current_y_pos + 5;
         for (const auto& widget : module->getWidgets()) {
             _renderWidget(widget, this->_sizeX / 5, current_rendering_y);
             current_rendering_y += widget->getRenderSize() * SML_SIZE_FACTOR;
         }
 
-        current_y_pos += 2 + 120;
+        current_y_pos += 3 * SML_SIZE_FACTOR + (current_rendering_y - current_y_pos);
     }
     this->_refresh();
 }
@@ -69,10 +78,28 @@ void Krell::Displays::SFMLDisplay::_renderWidget(
     if (dynamic_cast<Widgets::StringWidget*>(widget.get()) != nullptr)
         return _renderStringWidget(
             dynamic_cast<Widgets::StringWidget*>(widget.get()), x, y);
+    if (dynamic_cast<Widgets::NumericWidget*>(widget.get()) != nullptr)
+        return _renderNumericWidget(
+            dynamic_cast<Widgets::NumericWidget*>(widget.get()), x, y);
 }
 
 void Krell::Displays::SFMLDisplay::_renderStringWidget(
     const Widgets::StringWidget* widget,
+    const std::uint16_t x,
+    const std::uint16_t y) const
+{
+    sf::Text text;
+
+    text.setFont(*this->_font);
+    text.setPosition(x, y);
+    text.setString(std::format("{} {}", widget->getLegend(), widget->getValue()));
+    text.setCharacterSize(15);
+    text.setFillColor(sf::Color::White);
+    this->_window->draw(text);
+}
+
+void Krell::Displays::SFMLDisplay::_renderNumericWidget(
+    const Widgets::NumericWidget* widget,
     const std::uint16_t x,
     const std::uint16_t y) const
 {

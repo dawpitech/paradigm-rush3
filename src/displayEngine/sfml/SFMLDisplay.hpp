@@ -14,8 +14,9 @@
 #include <cstdint>
 #include <SFML/Graphics.hpp>
 
-#include "widgetEngine/widgets/StringWidget.hpp"
 #include "displayEngine/IDisplay.hpp"
+#include "widgetEngine/widgets/NumericWidget.hpp"
+#include "widgetEngine/widgets/StringWidget.hpp"
 
 namespace Krell::Displays
 {
@@ -39,6 +40,10 @@ namespace Krell::Displays
                 std::uint16_t y) const;
             void _renderStringWidget(
                 const Widgets::StringWidget* widget,
+                std::uint16_t x,
+                std::uint16_t y) const;
+            void _renderNumericWidget(
+                const Widgets::NumericWidget* widget,
                 std::uint16_t x,
                 std::uint16_t y) const;
             std::shared_ptr<sf::RenderWindow> _window;
