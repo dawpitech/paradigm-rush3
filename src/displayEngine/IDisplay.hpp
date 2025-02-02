@@ -10,6 +10,7 @@
 #include <memory>
 #include <vector>
 
+#include "enums.hpp"
 #include "widgetEngine/modules/IModule.hpp"
 
 namespace Krell {
@@ -19,7 +20,7 @@ namespace Krell {
             virtual void displayModules(
                 std::shared_ptr<std::vector<std::shared_ptr<IModule>>> module
             ) const = 0;
-            virtual void useEvent() = 0;
+            virtual bool useEvent() = 0;
             virtual void _refresh() const = 0;
     };
 }  // namespace Krell

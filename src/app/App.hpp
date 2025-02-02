@@ -7,13 +7,12 @@
 
 #pragma once
 
-#include "displayEngine/IDisplay.hpp"
-#include "enums.hpp"
-#include "widgetEngine/WidgetEngine.hpp"
 #include <cstdint>
-#include <exception>
 #include <memory>
-#include <string>
+
+#include "enums.hpp"
+#include "displayEngine/IDisplay.hpp"
+#include "widgetEngine/WidgetEngine.hpp"
 
 namespace Krell {
 
@@ -21,7 +20,7 @@ namespace Krell {
         public:
             explicit App(const DisplayType &type);
 
-            void run() const;
+            void run();
 
         private:
             std::unique_ptr<IDisplay> _displayManager = nullptr;

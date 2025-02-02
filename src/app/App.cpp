@@ -27,13 +27,14 @@ Krell::App::App(const DisplayType &type)
         throw std::exception();
 }
 
-void Krell::App::run() const
+void Krell::App::run()
 {
     auto previousTime = std::time(nullptr);
 
     if (this->_displayManager == nullptr)
         throw std::exception();
     try {
+        this->_displayManager->displayModules(this->_widgetEngine.getModules());
         while (true)
         {
             if (std::time(nullptr) < previousTime + 2) {
@@ -42,7 +43,22 @@ void Krell::App::run() const
                 std::this_thread::sleep_for(std::chrono::milliseconds(10));
                 // still handle here the input events to make the UI responsive
                 // regardless of the refresh time
-                this->_displayManager->useEvent();
+                if (this->_displayManager->useEvent())
+                {
+                    if (this->_displayType == DisplayType::NCURSES)
+                    {
+                        this->_displayManager = std::make_unique<Displays::SFMLDisplay>();
+                        this->_displayType = DisplayType::SFML;
+                    }
+                    else if (this->_displayType == DisplayType::SFML)
+                    {
+                        this->_displayManager = std::make_unique<Displays::NCursesDisplay>();
+                        this->_displayType = DisplayType::NCURSES;
+                    }
+                    else
+                        throw std::exception();
+                    this->_displayManager->displayModules(this->_widgetEngine.getModules());
+                }
                 continue;
             }
             previousTime = std::time(nullptr);

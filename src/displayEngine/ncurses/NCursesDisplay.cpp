@@ -96,8 +96,12 @@ void Krell::Displays::NCursesDisplay::_renderNumericWidget(
         widget->getValue());
 }
 
-void Krell::Displays::NCursesDisplay::useEvent()
+bool Krell::Displays::NCursesDisplay::useEvent()
 {
+    timeout(5);
+    if (getch() == 's')
+        return true;
+    return false;
 }
 
 void Krell::Displays::NCursesDisplay::_refresh() const

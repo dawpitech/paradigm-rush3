@@ -113,7 +113,7 @@ void Krell::Displays::SFMLDisplay::_renderNumericWidget(
     this->_window->draw(text);
 }
 
-void Krell::Displays::SFMLDisplay::useEvent()
+bool Krell::Displays::SFMLDisplay::useEvent()
 {
     sf::Event event{};
     while (this->_window->pollEvent(event))
@@ -121,6 +121,9 @@ void Krell::Displays::SFMLDisplay::useEvent()
         if (event.type == sf::Event::Closed)
             throw UserCalledExitException();
     }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
+        return true;
+    return false;
 }
 
 void Krell::Displays::SFMLDisplay::_refresh() const

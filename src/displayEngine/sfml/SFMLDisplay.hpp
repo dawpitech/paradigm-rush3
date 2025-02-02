@@ -30,7 +30,7 @@ namespace Krell::Displays
             void displayModules(
                 std::shared_ptr<std::vector<std::shared_ptr<IModule>>> modules
             ) const override;
-            void useEvent() override;
+            bool useEvent() override;
             void _refresh() const override;
 
         private:
