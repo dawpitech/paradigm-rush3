@@ -54,7 +54,7 @@ void Krell::Displays::NCursesDisplay::displayModules(
             current_rendering_y += widget->getRenderSize();
         }
 
-        current_y_pos += 4 + 2 + current_y_pos;
+        current_y_pos += 2 + y_rendering_height;
     }
     refresh();
 }
