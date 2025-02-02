@@ -28,7 +28,7 @@ SRC	=	$(shell find src -name "*.cpp")
 
 OBJ = $(SRC:%.cpp=$(BDIR)/%.o)
 
-NAME = test
+NAME = MyGKrellm
 
 .PHONY: all
 all: $(NAME)
