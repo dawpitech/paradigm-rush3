@@ -9,7 +9,6 @@
 
 #include <memory>
 #include <vector>
-#include <SFML/Graphics/RenderWindow.hpp>
 
 #include "widgetEngine/modules/IModule.hpp"
 
@@ -22,8 +21,5 @@ namespace Krell {
             ) const = 0;
             virtual void useEvent() = 0;
             virtual void _refresh() const = 0;
-
-    protected:
-            std::shared_ptr<sf::RenderWindow> _window;
     };
 }  // namespace Krell

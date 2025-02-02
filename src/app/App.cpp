@@ -8,21 +8,23 @@
 #include <iostream>
 #include <memory>
 #include <thread>
-#include <vector>
 
 #include "App.hpp"
-
 #include "enums.hpp"
 #include "displayEngine/IDisplay.hpp"
 #include "displayEngine/ncurses/NCursesDisplay.hpp"
+#include "displayEngine/sfml/SFMLDisplay.hpp"
 #include "widgetEngine/WidgetEngine.hpp"
-#include "widgetEngine/modules/IModule.hpp"
 
 Krell::App::App(const DisplayType &type)
 {
     this->_displayType = type;
     if (type == DisplayType::NCURSES)
         this->_displayManager = std::make_unique<Displays::NCursesDisplay>();
+    else if (type == DisplayType::SFML)
+        this->_displayManager = std::make_unique<Displays::SFMLDisplay>();
+    else
+        throw std::exception();
 }
 
 void Krell::App::run() const
@@ -47,19 +49,10 @@ void Krell::App::run() const
             this->_widgetEngine.refreshData();
             this->_displayManager->displayModules(this->_widgetEngine.getModules());
         }
-    } catch (const std::exception &e) { std::cerr << e.what() << std::endl; }
-}
-
-std::shared_ptr<std::vector<Krell::IModule>> Krell::App::_sortModules(
-    std::shared_ptr<std::vector<Krell::IModule>> modules)
-{
-    /*if (modules == nullptr)*/
-    /*     throw Error("Unable to retrieve module for sort");*/
-    /*for (size_t i = 0; i < modules->size() - 1; i += 1) {*/
-    /*    if ((*modules)[i].getRenderPos() > (*modules)[i + 1].getRenderPos()) {*/
-    /*        auto stored = (*modules)[i];*/
-    /*        std::swap((*modules)[i], (*modules)[i + 1]);*/
-    /*    }*/
-    /*}*/
-    return nullptr;
+    } catch (const std::exception &e)
+    {
+        if (dynamic_cast<const Displays::SFMLDisplay::UserCalledExitException*>(&e) != nullptr)
+            return;
+        std::cerr << e.what() << std::endl;
+    }
 }

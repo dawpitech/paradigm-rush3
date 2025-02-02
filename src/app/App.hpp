@@ -24,11 +24,9 @@ namespace Krell {
             void run() const;
 
         private:
-            std::shared_ptr<std::vector<IModule>> _sortModules(
-                std::shared_ptr<std::vector<IModule>> modules);
             std::unique_ptr<IDisplay> _displayManager = nullptr;
             WidgetEngine _widgetEngine = WidgetEngine();
-            DisplayType _displayType = DisplayType::NCURSES;
+            DisplayType _displayType;
             std::uint16_t timeBetweenFrameMs = 2000;
     };
 }  // namespace Krell

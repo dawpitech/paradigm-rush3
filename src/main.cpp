@@ -8,7 +8,7 @@
 #include <thread>
 
 #include "app/App.hpp"
-#include "displayEngine/sfml/SfmlDisplay.hpp"
+#include "displayEngine/sfml/SFMLDisplay.hpp"
 #include "widgetEngine/WidgetEngine.hpp"
 #include "widgetEngine/widgets/NumericWidget.hpp"
 #include "widgetEngine/widgets/StringWidget.hpp"

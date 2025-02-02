@@ -7,11 +7,12 @@
 
 #pragma once
 
+#include <algorithm>
 #include <ncurses.h>
 
 #include "displayEngine/IDisplay.hpp"
-#include "widgetEngine/widgets/StringWidget.hpp"
 #include "widgetEngine/widgets/NumericWidget.hpp"
+#include "widgetEngine/widgets/StringWidget.hpp"
 
 namespace Krell::Displays
 {
@@ -27,15 +28,15 @@ namespace Krell::Displays
             void _refresh() const override;
 
         protected:
-            static void renderWidget(const std::shared_ptr<IWidget>& widget,
+            static void _renderWidget(const std::shared_ptr<IWidget>& widget,
                 WINDOW* window,
                 std::uint8_t x,
                 std::uint8_t y);
-            static void renderStringWidget(const Widgets::StringWidget* widget,
+            static void _renderStringWidget(const Widgets::StringWidget* widget,
                 WINDOW* window,
                 std::uint8_t x,
                 std::uint8_t y);
-            static void renderNumericWidget(const Widgets::NumericWidget* widget,
+            static void _renderNumericWidget(const Widgets::NumericWidget* widget,
                 WINDOW* window,
                 std::uint8_t x,
                 std::uint8_t y);

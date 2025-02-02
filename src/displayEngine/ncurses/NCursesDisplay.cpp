@@ -27,8 +27,8 @@ void Krell::Displays::NCursesDisplay::displayModules(
     int height;
     int width;
     getmaxyx(stdscr, height, width);
+    (void) height;
 
-    (void) height; //TODO: remove if not used
     clear();
     std::uint8_t current_y_pos = 0;
     for (const auto& module : *modules)
@@ -49,7 +49,7 @@ void Krell::Displays::NCursesDisplay::displayModules(
 
         std::uint8_t current_rendering_y = 1;
         for (const auto& widget : module->getWidgets()) {
-            renderWidget(widget, module_window, width / 2 - width * 0.10, current_rendering_y);
+            _renderWidget(widget, module_window, width / 2 - width * 0.10, current_rendering_y);
             current_rendering_y += widget->getRenderSize();
         }
 
@@ -58,23 +58,23 @@ void Krell::Displays::NCursesDisplay::displayModules(
     refresh();
 }
 
-void Krell::Displays::NCursesDisplay::renderWidget(
+void Krell::Displays::NCursesDisplay::_renderWidget(
     const std::shared_ptr<IWidget>& widget,
     WINDOW* window,
     const std::uint8_t x,
     const std::uint8_t y)
 {
     if (dynamic_cast<Widgets::StringWidget*>(widget.get()) != nullptr)
-        return renderStringWidget(
+        return _renderStringWidget(
             dynamic_cast<Widgets::StringWidget*>(widget.get()),
             window, x, y);
     if (dynamic_cast<Widgets::NumericWidget*>(widget.get()) != nullptr)
-        return renderNumericWidget(
+        return _renderNumericWidget(
             dynamic_cast<Widgets::NumericWidget*>(widget.get()),
             window, x, y);
 }
 
-void Krell::Displays::NCursesDisplay::renderStringWidget(
+void Krell::Displays::NCursesDisplay::_renderStringWidget(
     const Widgets::StringWidget* widget,
     WINDOW* window,
     const std::uint8_t x,
@@ -85,7 +85,7 @@ void Krell::Displays::NCursesDisplay::renderStringWidget(
         widget->getValue().c_str());
 }
 
-void Krell::Displays::NCursesDisplay::renderNumericWidget(
+void Krell::Displays::NCursesDisplay::_renderNumericWidget(
     const Widgets::NumericWidget* widget,
     WINDOW* window,
     const std::uint8_t x,
