@@ -10,6 +10,7 @@
 #include "app/App.hpp"
 #include "displayEngine/sfml/SfmlDisplay.hpp"
 #include "widgetEngine/WidgetEngine.hpp"
+#include "widgetEngine/widgets/NumericWidget.hpp"
 #include "widgetEngine/widgets/StringWidget.hpp"
 
 [[noreturn]] void debug_renderer()
@@ -23,8 +24,18 @@
             std::cout << "MODULE " << module->getRenderName() << ":" << std::endl;
             for (const auto& widget : module->getWidgets())
             {
-                const auto str_widget = dynamic_cast<Krell::Widgets::StringWidget*>(widget.get());
-                std::cout << "\t" << str_widget->getLegend() << " " << str_widget->getValue() << std::endl;
+                if (dynamic_cast<Krell::Widgets::StringWidget*>(widget.get()) != nullptr)
+                {
+                    const auto str_widget = dynamic_cast<Krell::Widgets::StringWidget*>(widget.get());
+                    std::cout << "\t" << str_widget->getLegend() << " " << str_widget->getValue() << std::endl;
+                    continue;
+                }
+                if (dynamic_cast<Krell::Widgets::NumericWidget*>(widget.get()) != nullptr)
+                {
+                    const auto str_widget = dynamic_cast<Krell::Widgets::NumericWidget*>(widget.get());
+                    std::cout << "\t" << str_widget->getLegend() << " " << str_widget->getValue() << std::endl;
+                    continue;
+                }
             }
         }
         std::cout << std::endl;
